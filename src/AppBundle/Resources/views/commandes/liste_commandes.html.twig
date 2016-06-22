@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-submit" href="{{ path('start') }}">GO !</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Liste des commandes </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <tr><th>Commande</th><th>Status</th><th>Employé</th><th>Action</th></th></tr>
+                {% for commande in commandes %}
+                    <tr>
+                        <td>{{ commande.numCommande }}</td>
+                        <td>{{ commande.etat == 1 ? "En cours" : "En attente" }}</td>
+                        <td>{{ commande.etat == 1 ? commande.employe.username : "" }}</td>
+                        <td><a class="btn btn-info" {{ commande.etat == 0 ? "style='display:none;'" : "" }} href="{{ path('commande_free', {'id': commande.id} ) }}">Pouet</a></td>
+                    </tr>   
+                {% endfor %}
+            </table>        
+        </div>
+    </div>
+{% endblock  %}

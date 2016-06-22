@@ -15,7 +15,18 @@ class CommandeController extends Controller {
     
     public function freeAction($id)
     {
-        return new Response('<html><body>free Commande !</body></html>');
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Commande');
+        
+        $commande = $repo->find($id);
+        if($commande){
+           $commande->setEmploye(null);
+           $commande->setEtat(0);
+           $em->persist($commande);
+           $em->flush();
+        }
+        
+        return $this->redirectToRoute('commandes_liste');
     }
     
     public function updateAction($id)
@@ -25,7 +36,18 @@ class CommandeController extends Controller {
     
     public function finishAction($id)
     {
-        return new Response('<html><body>finish Commande !</body></html>');
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Commande');
+        
+        $commande = $repo->find($id);
+        if($commande){
+           $commande->setEtat(2);
+           $commande->setDateTraitement(time());
+           $em->persist($commande);
+           $em->flush();
+        }
+        
+        return $this->redirectToRoute('commandes_liste');
     }
     
     public function printAction($id)
@@ -35,12 +57,30 @@ class CommandeController extends Controller {
     
     public function indexAction()
     {
-        return new Response('<html><body>Liste commandes !</body></html>');
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Commande');
+        $commandes = $repo->getActiveCommandes();
+   
+        return $this->render('AppBundle:commandes:liste_commandes.html.twig',['commandes' => $commandes]);
     }
     
-    public function startAction()
+    public function nextAction()
     {
-        return new Response('<html><body>Commencer commandes !</body></html>');
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Commande');
+        $commandes = $repo->getActiveCommandes();
+        if(count($commandes)>0){
+            foreach ($commandes as $commande){
+            if($commande->getEtat()==0 || $commande->getEmploye()->getId()==$this->getUser()->getId()){
+                $commande->setEtat(1);
+                $commande->setEmploye($this->getUser());
+                $em->persist($commande);
+                $em->flush();
+                return $this->redirectToRoute('commande_show', array('id' => $commande->getId()));
+            }
+            }
+        }
+        return $this->redirectToRoute('commandes_liste');
     }
     
     public function importAction()

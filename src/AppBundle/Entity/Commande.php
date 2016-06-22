@@ -4,9 +4,10 @@ namespace AppBundle\Entity;
  
 use Doctrine\ORM\Mapping as ORM;
 use UserBundle\Entity\Utilisateur;
+use AppBundle\Repository\CommandeRepository;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CommandeRepository")
  */
 class Commande {
     
@@ -23,7 +24,7 @@ class Commande {
     private $numCommande;
     
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      */
     private $etat;
     
@@ -51,7 +52,7 @@ class Commande {
     
     /**
      *
-     * @ORM\OneToOne(targetEntity="Client")
+     * @ORM\ManyToOne(targetEntity="Client")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="client", referencedColumnName="id")
      * })
@@ -59,18 +60,18 @@ class Commande {
     private $client;
     
     /**
-     * @ORM\OneToOne(targetEntity="UserBundle\Entity\Utilisateur")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\Utilisateur")
      * @ORM\JoinColumn(nullable=true)
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="employe", referencedColumnName="id")
      * })
      */
     private $employe;
-            
+    
     function getId() {
         return $this->id;
     }
-    
+
     function getNumCommande() {
         return $this->numCommande;
     }
@@ -91,12 +92,22 @@ class Commande {
         return $this->commentaire;
     }
 
-        
-    
+    function getLigneCommande() {
+        return $this->ligneCommande;
+    }
+
+    function getClient() {
+        return $this->client;
+    }
+
+    function getEmploye() {
+        return $this->employe;
+    }
+
     function setId($id) {
         $this->id = $id;
     }
-    
+
     function setNumCommande($numCommande) {
         $this->numCommande = $numCommande;
     }
@@ -108,7 +119,7 @@ class Commande {
     function setDate($date) {
         $this->date = $date;
     }
-    
+
     function setDateTraitement($dateTraitement) {
         $this->dateTraitement = $dateTraitement;
     }
@@ -117,14 +128,28 @@ class Commande {
         $this->commentaire = $commentaire;
     }
 
-        
-        
-    function __construct($numCommande, $etat, $date, $dateTraitement, $commentaire) {
+    function setLigneCommande($ligneCommande) {
+        $this->ligneCommande = $ligneCommande;
+    }
+
+    function setClient($client) {
+        $this->client = $client;
+    }
+
+    function setEmploye($employe) {
+        $this->employe = $employe;
+    }
+
+    function __construct($id, $numCommande, $etat, $date, $dateTraitement, $commentaire, $ligneCommande, $client, $employe) {
+        $this->id = $id;
         $this->numCommande = $numCommande;
         $this->etat = $etat;
         $this->date = $date;
         $this->dateTraitement = $dateTraitement;
         $this->commentaire = $commentaire;
+        $this->ligneCommande = $ligneCommande;
+        $this->client = $client;
+        $this->employe = $employe;
     }
 
 

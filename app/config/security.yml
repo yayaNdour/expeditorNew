@@ -36,11 +36,9 @@ security:
         # - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # Listing des commandes
-        - { path: ^/commandes$, role: ROLE_MANAGER }                
+        - { path: ^/commandes$, role: [ROLE_EMPLOYE, ROLE_MANAGER] }
         # Commencer (ou reprendre) une commande
-        - { path: ^/start/, role: ROLE_EMPLOYE }                    
-        # Voir le détail d'une commande
-        - { path: ^/commande/, role: ROLE_EMPLOYE ROLE_MANAGER }
+        - { path: ^/start/, role: ROLE_EMPLOYE }                   
         # Libérer une commande dans le cas d'absence de l'employe qui l'avais commencé
         - { path: ^/commande/freedom/, role: ROLE_MANAGER }
         # Mise à jour en ajax d'une commande (changer la quantité)
@@ -48,7 +46,9 @@ security:
         # Finaliser une commande
         - { path: ^/commande/finish/, role: ROLE_EMPLOYE }   
         # Imprimer une commande
-        - { path: ^/commande/print/, role: ROLE_EMPLOYE }
+        - { path: ^/commande/print/, role: ROLE_EMPLOYE } 
+        # Voir le détail d'une commande
+        - { path: ^/commande/, role: [ROLE_EMPLOYE, ROLE_MANAGER] }
         # Lister les articles
         - { path: ^/articles$, role: ROLE_MANAGER }
         # Modifier un article
