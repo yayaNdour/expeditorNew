@@ -11,3 +11,7 @@
 /bin/
 /nbproject/*
 /composer.phar
+web/config.php
+app/check.php
+app/SymfonyRequirements.php
+composer.lock
