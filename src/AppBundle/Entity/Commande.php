@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
  
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\Utilisateur;
 
 /**
  * @ORM\Entity
@@ -49,7 +50,6 @@ class Commande {
     private $ligneCommande;
     
     /**
-     * @var \ENI\QCM\Bundle\StagiaireBundle\Entity\Theme
      *
      * @ORM\OneToOne(targetEntity="Client")
      * @ORM\JoinColumns({
