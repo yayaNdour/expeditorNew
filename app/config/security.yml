@@ -41,6 +41,8 @@ security:
         - { path: ^/start/, role: ROLE_EMPLOYE }                    
         # Voir le détail d'une commande
         - { path: ^/commande/, role: ROLE_EMPLOYE ROLE_MANAGER }
+        # Libérer une commande dans le cas d'absence de l'employe qui l'avais commencé
+        - { path: ^/commande/freedom/, role: ROLE_MANAGER }
         # Mise à jour en ajax d'une commande (changer la quantité)
         - { path: ^/commande/update/, role: ROLE_EMPLOYE }
         # Finaliser une commande
