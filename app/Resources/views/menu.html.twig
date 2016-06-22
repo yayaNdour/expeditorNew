@@ -1,4 +1,6 @@
-<nav class="navbar navbar-default hidden">
+
+
+<nav class="navbar navbar-default {{ (app.request.attributes.get('_route') == 'fos_user_security_login') ? 'hidden' }}">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -9,15 +11,27 @@
             </button>
             <a class="navbar-brand" href="#">Expeditor</a>
         </div>
+        
+        
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Commande</a></li>
-                <li><a href="#">Employé</a></li>
-                <li><a href="#">Article</a></li>
+                
+                {% if is_granted('ROLE_MANAGER') %}
+                    <li {{ (app.request.attributes.get('_route') == 'employes_liste') ? ' class="active"' }}><a href="{{ path('employes_liste')}}">Employé</a></li>
+                    <li {{ (app.request.attributes.get('_route') == 'articles_liste') ? ' class="active"' }}><a href="{{ path('articles_liste')}}">Article</a></li>
+                    <li {{ (app.request.attributes.get('_route') == 'commandes_liste') ? ' class="active"' }}><a href="{{ path('commandes_liste')}}">Commandes</a></li>
+                {% endif %}
+                
+                {% if is_granted('ROLE_EMPLOYE') %}
+                    <li {{ (app.request.attributes.get('_route') == 'start') ? ' class="active"' }}><a href="{{ path('start')}}">Faire commande</a></li>
+                {% endif %}
+                
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="../navbar-fixed-top/">Disconnect</a></li>
+              <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
             </ul>
         </div><!--/.nav-collapse -->
+        
+        
     </div><!--/.container-fluid -->
 </nav>
