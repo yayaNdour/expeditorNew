@@ -59,8 +59,8 @@ class Commande {
     private $client;
     
     /**
-     * @ORM\Column(nullable=true)
      * @ORM\OneToOne(targetEntity="UserBundle\Entity\Utilisateur")
+     * @ORM\JoinColumn(nullable=true)
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="employe", referencedColumnName="id")
      * })
