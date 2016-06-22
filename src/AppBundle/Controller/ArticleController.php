@@ -4,13 +4,46 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use AppBundle\Entity;
 
 
 class ArticleController extends Controller {
     
-    public function updateAction($id)
+    public function updateAction(Request $request,$id=null)
     {
-        return new Response('<html><body>Update Article !</body></html>');
+        $formFactory = Forms::createFormFactory();
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Article');
+        
+        $article = $repo->find($id);
+        
+       
+      $form = $formFactory->createBuilder()
+              ->add('nom','text')
+              ->add('poids','number')
+              ->add('prix','number')
+              ->add('submit','submit')
+              ->getForm();
+      
+      
+     /* if($request)
+       $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+            exit(var_dump($data));
+            $article = new Article();
+                
+            $response = new RedirectResponse('/task/success');
+            $response->prepare($request);
+
+            return $response->send();
+        }*/
+       
+        return $this->render('AppBundle:articles:edit_article.html.twig',['form' => $form->createView()]);
     }
     
     public function removeAction($id)
