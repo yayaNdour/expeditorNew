@@ -9,6 +9,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController {
     //put your code here
+    public function suppressionAction(){
+        
+    }
+    
+    public function creationAction(){
+        
+    }
+    
+    public function affichageAction(){
+        
+    }
+     public function modifierAction()
+    {
+        return new Response('<html><body>Hello !</body></html>');
+    }
+    
 }
 
 
