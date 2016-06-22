@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row {{ (app.request.attributes.get('_route') == 'fos_user_security_login') ? 'hidden' }}">
     <footer class="footer">
         <p class="text-muted" style="margin-top: 20px;margin-left: 15px;">&copy; Expeditor </p>
     </footer>  

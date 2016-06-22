@@ -6,7 +6,12 @@
         <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
         <style>
             body{
-                background-color: #ddd;
+                //background-color: #ddd;
+                background-color: #245269; 
+                background-image: url('{{ asset('assets/images/mountain.jpg')}}');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment:fixed;
             }
             
             .main-page{
@@ -37,7 +42,7 @@
         <div class="container-fluid">
             
             <div class="col-md-1"></div>
-            <div class="col-md-10 main-page">
+            <div class="col-md-10 {{ (app.request.attributes.get('_route') != 'fos_user_security_login') ? 'main-page' }}">
             {% include 'menu.html.twig' %}
             
             {% block body %}{% endblock %}
