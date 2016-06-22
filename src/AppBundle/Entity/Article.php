@@ -31,11 +31,6 @@ class Article
      */
     private $prix;
     
-    /**
-     * @ORM\OneToMany(targetEntity="LigneCommande", mappedBy="commande")
-     */
-     private $commandes;
-
     function getId() {
         return $this->id;
     }
@@ -50,10 +45,6 @@ class Article
 
     function getPrix() {
         return $this->prix;
-    }
-
-    function getCommandes() {
-        return $this->commandes;
     }
 
     function setId($id) {
@@ -72,9 +63,7 @@ class Article
         $this->prix = $prix;
     }
 
-    function setCommandes($commandes) {
-        $this->commandes = $commandes;
-    }
+   
     
     function __construct($nom, $poids, $prix) {
         $this->nom = $nom;

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 class ArticleController extends Controller {
+    
     public function updateAction($id)
     {
         return new Response('<html><body>Update Article !</body></html>');
@@ -19,7 +20,11 @@ class ArticleController extends Controller {
     
     public function indexAction()
     {
-        return new Response('<html><body>Liste Articles !</body></html>');
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Article');
+        $articles = $repo->findAll();
+   
+        return $this->render('AppBundle:articles:liste_articles.html.twig',['articles' => $articles]);
     }
     
 }

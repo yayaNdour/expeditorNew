@@ -45,13 +45,13 @@ commande_print:
     defaults:  { _controller: AppBundle:Commande:print }  
     
 articles_liste:
-    path:      /articles$
+    path:      /articles
     defaults:  { _controller: AppBundle:Article:index }  
     
-articles_update:
+article_update:
     path:      /article/{id}
     defaults:  { _controller: AppBundle:Article:update }
     
-articles_remove:
-    path:      /article/{id}
+article_remove:
+    path:      /article/remove/{id}
     defaults:  { _controller: AppBundle:Article:remove }

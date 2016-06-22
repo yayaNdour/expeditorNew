@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ dump(articles) }}
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Liste des articles </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <tr><th>Libelle</th><th>Poids</th><th>Prix</th><th>Action</th></th></tr>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ article.nom }}</td>
+                        <td>{{ article.poids }}</td>
+                        <td>{{ article.prix }}</td>
+                        <td> <a class=" glyphicon glyphicon-pencil btn btn-info" href="{{ path('article_update', {'id': article.id} ) }}"></a> <a class="  glyphicon glyphicon-trash btn btn-danger" href="{{ path('article_remove', {'id': article.id}) }}"></a></td>
+                    </tr>   
+                {% endfor %}
+            </table>        
+        </div>
+    </div>
+{% endblock  %}
