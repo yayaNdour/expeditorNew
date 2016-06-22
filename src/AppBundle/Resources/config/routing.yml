@@ -1,24 +1,6 @@
-user:
-    resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /
-
-user_bundle:
-   resource: "@UserBundle/Resources/config/routing.yml"
-
-# app:
-#    resource: "@AppBundle/Resources/config/routing.yml"
-#    prefix:   /
-
-# app_bundle:
-#    resource: "@AppBundle/Resources/config/routing.yml"
-#    
 commandes_liste:
     path:      /commandes
     defaults:  { _controller: AppBundle:Commande:index }
-    
-commandes_import:
-    path:      /commandes/import
-    defaults:  { _controller: AppBundle:Commande:import }
     
 start:
     path:      /start

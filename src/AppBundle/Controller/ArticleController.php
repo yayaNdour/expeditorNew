@@ -2,27 +2,19 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
-class ArticleController {
-    //put your code here
-    public function suppressionAction(){
-        
-    }
-    
-    public function creationAction(){
-        
-    }
-    
-    public function affichageAction(){
-        
-    }
-     public function modifierAction()
+class ArticleController extends Controller {
+    public function updateAction($id)
     {
-        return new Response('<html><body>Hello !</body></html>');
+        return new Response('<html><body>Update Article !</body></html>');
+    }
+    
+    public function indexAction()
+    {
+        return new Response('<html><body>Liste Articles !</body></html>');
     }
     
 }
