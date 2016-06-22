@@ -3,10 +3,10 @@
 namespace AppBundle\Entity;
  
 use Doctrine\ORM\Mapping as ORM;
-
+use AppBundle\Repository\LigneCommandeRepository;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LigneCommandeRepository")
  */
 class LigneCommande {
     

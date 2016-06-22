@@ -20,7 +20,7 @@
                         <td>{{ commande.numCommande }}</td>
                         <td>{{ commande.etat == 1 ? "En cours" : "En attente" }}</td>
                         <td>{{ commande.etat == 1 ? commande.employe.username : "" }}</td>
-                        <td><a class="btn btn-info" {{ commande.etat == 0 ? "style='display:none;'" : "" }} href="{{ path('commande_free', {'id': commande.id} ) }}">Pouet</a></td>
+                        <td><a class="btn btn-info" {{ commande.etat == 0 ? "style='display:none;'" : "" }} href="{{ path('commande_free', {'id': commande.id} ) }}">Libérer la commande</a></td>
                     </tr>   
                 {% endfor %}
             </table>        

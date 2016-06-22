@@ -10,7 +10,17 @@ class CommandeController extends Controller {
     
     public function showAction($id)
     {
-        return new Response('<html><body>Commande !</body></html>');
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Commande');
+        
+        $commande = $repo->find($id);
+        if(!$commande){
+            return $this->redirectToRoute('commandes_liste');
+        }
+        $repo = $em->getRepository('AppBundle:LigneCommande');
+        $lignes = $repo->getLigneCommande($id);
+        
+        return $this->render('AppBundle:commandes:detail_commande.html.twig',['commande' => $commande, 'lignes' => $lignes]);
     }
     
     public function freeAction($id)

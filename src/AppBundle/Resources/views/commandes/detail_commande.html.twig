@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Commande  {{ commande.numCommande }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <tr><th>Article</th><th>Quantité total</th><th>Quantité en carton</th><th>Poids</th></th></tr>
+                {% for ligne in lignes %}
+                    <tr>
+                        <td>{{ ligne.article.nom }}</td>
+                        <td>{{ ligne.quantiteTotal }}</td>
+                        <td>{{ ligne.quantiteEnCours }}</td>
+                        <td>???</td>
+                    </tr>   
+                {% endfor %}
+            </table>        
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-info" href="{{ path('commande_print', {'id': commande.id} ) }}">Imprimer</a>
+            <a class="btn btn-info" href="{{ path('commande_finish', {'id': commande.id} ) }}">Fini</a>
+        </div>
+    </div>
+{% endblock  %}
