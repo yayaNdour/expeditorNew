@@ -1,0 +1,22 @@
+{
+  "name": "expeditor",
+  "homepage": "https://github.com/yayaNdour/expeditorNew",
+  "authors": [
+    "yayaNdour <illegalsen44800@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}

@@ -1,0 +1,5 @@
+{
+    "directory": "web/assets/vendor/",
+	 "proxy": "http://proxy-sh.ad.campus-eni.fr:3128",
+	 "https-proxy":"http://proxy-sh.ad.campus-eni.fr:3128"
+}
