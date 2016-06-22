@@ -5,11 +5,41 @@
     <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
 {% endif %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('bundles/webshome/css/main.css') }}" rel="stylesheet">
+    <style>
+        body {
+                padding-top: 20px;
+                background-color: #245269; 
+                background-image: url('{{ asset('assets/images/mountain.jpg')}}');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment:fixed;
+            }
+            
+            #login-form{
+                margin-top: 80px;
+                padding: 15px;
+                border-radius: 10px;
+                background-color: rgb(255, 255, 255);
+                background-color: rgba(255, 255, 255, 0.8);
+            }
+            
+            #login-logo{
+                margin-bottom:25px;
+            }
+    </style>
+{% endblock %}
+
+
 
 <div class="row">
     <div class="col-sm-3 col-md-4"></div>
     <div id="login-form" class="col-sm-6 col-md-4">
         <img id="login-logo" class="img-responsive image-center" src="{{ asset('assets/images/logo.png')}}" width="40%"/>
+        
         <form action="{{ path("fos_user_security_check") }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             <div class="form-group">
