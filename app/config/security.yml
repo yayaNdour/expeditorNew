@@ -5,8 +5,12 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        # Tout les utilisateurs ont le rôle user
+        # Le manager à aussi le rôle admin
+        ROLE_USER:  ROLE_USER
+        ROLE_ADMIN: ROLE_ADMIN
+        ROLE_MANAGER: ROLE_MANAGER
+        ROLE_EMPLOYE: ROLE_EMPLOYE
 
     providers:
         fos_userbundle:
@@ -29,6 +33,25 @@ security:
             
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        # - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # Listing des commandes
+        - { path: ^/commandes$, role: ROLE_MANAGER }                
+        # Commencer (ou reprendre) une commande
+        - { path: ^/start/, role: ROLE_EMPLOYE }                    
+        # Voir le détail d'une commande
+        - { path: ^/commande/, role: ROLE_EMPLOYE ROLE_MANAGER }
+        # Mise à jour en ajax d'une commande (changer la quantité)
+        - { path: ^/commande/update/, role: ROLE_EMPLOYE }
+        # Finaliser une commande
+        - { path: ^/commande/finish/, role: ROLE_EMPLOYE }   
+        # Imprimer une commande
+        - { path: ^/commande/print/, role: ROLE_EMPLOYE }
+        # Lister les articles
+        - { path: ^/articles$, role: ROLE_MANAGER }
+        # Modifier un article
+        - { path: ^/article/, role: ROLE_MANAGER }
+        # Lister les employés
+        - { path: ^/employes$, role: ROLE_MANAGER }
+        # Modifier un employé
+        - { path: ^/employe/, role: ROLE_MANAGER }
