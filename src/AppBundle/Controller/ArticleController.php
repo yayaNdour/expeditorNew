@@ -7,12 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use AppBundle\Entity;
+use AppBundle\Entity\Article;
 
 
 class ArticleController extends Controller {
     
-    public function updateAction(Request $request,$id=null)
+    public function updateAction(Request $request,Article $id)
     {
         $formFactory = Forms::createFormFactory();
         $em = $this->getDoctrine()->getManager();
@@ -20,8 +20,11 @@ class ArticleController extends Controller {
         
         $article = $repo->find($id);
         
+        if($article == null){
+            $article = new Article();
+        }
        
-      $form = $formFactory->createBuilder()
+      $form = $this->createFormBuilder($article)
               ->add('nom','text')
               ->add('poids','number')
               ->add('prix','number')
@@ -29,19 +32,14 @@ class ArticleController extends Controller {
               ->getForm();
       
       
-     /* if($request)
        $form->handleRequest($request);
-
         if ($form->isValid()) {
-            $data = $form->getData();
-            exit(var_dump($data));
-            $article = new Article();
-                
-            $response = new RedirectResponse('/task/success');
-            $response->prepare($request);
+            exit(var_dump($article));
+            $em->persist($article);
+            $em->flush();
+            return $this->redirectToRoute('articles_liste');
 
-            return $response->send();
-        }*/
+        }
        
         return $this->render('AppBundle:articles:edit_article.html.twig',['form' => $form->createView()]);
     }
