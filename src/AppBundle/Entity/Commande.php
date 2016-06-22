@@ -31,6 +31,17 @@ class Commande {
     */
     private $date;
     
+    /**
+    * @ORM\Column(type="integer")
+    */
+    private $dateTraitement;
+    
+
+    /** 
+     * @ORM\Column(type="string", length=500)
+     */
+    private $commentaire;
+    
    
     /**
      * @ORM\OneToMany(targetEntity="LigneCommande", mappedBy="article")
@@ -59,6 +70,10 @@ class Commande {
     function getId() {
         return $this->id;
     }
+    
+    function getNumCommande() {
+        return $this->numCommande;
+    }
 
     function getEtat() {
         return $this->etat;
@@ -68,8 +83,22 @@ class Commande {
         return $this->date;
     }
 
+    function getDateTraitement() {
+        return $this->dateTraitement;
+    }
+
+    function getCommentaire() {
+        return $this->commentaire;
+    }
+
+        
+    
     function setId($id) {
         $this->id = $id;
+    }
+    
+    function setNumCommande($numCommande) {
+        $this->numCommande = $numCommande;
     }
 
     function setEtat($etat) {
@@ -79,19 +108,25 @@ class Commande {
     function setDate($date) {
         $this->date = $date;
     }
-    function getNumCommande() {
-        return $this->numCommande;
+    
+    function setDateTraitement($dateTraitement) {
+        $this->dateTraitement = $dateTraitement;
     }
 
-    function setNumCommande($numCommande) {
-        $this->numCommande = $numCommande;
+    function setCommentaire($commentaire) {
+        $this->commentaire = $commentaire;
     }
 
         
-    function __construct($etat, $date) {
+        
+    function __construct($numCommande, $etat, $date, $dateTraitement, $commentaire) {
+        $this->numCommande = $numCommande;
         $this->etat = $etat;
         $this->date = $date;
+        $this->dateTraitement = $dateTraitement;
+        $this->commentaire = $commentaire;
     }
+
 
 
     
