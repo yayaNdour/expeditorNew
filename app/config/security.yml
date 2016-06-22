@@ -55,5 +55,6 @@ security:
         - { path: ^/article/, role: ROLE_MANAGER }
         # Lister les employés
         - { path: ^/employes$, role: ROLE_MANAGER }
-        # Modifier un employé
         - { path: ^/employe/, role: ROLE_MANAGER }
+     
+  

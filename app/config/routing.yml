@@ -55,3 +55,13 @@ article_update:
 article_remove:
     path:      /article/remove/{id}
     defaults:  { _controller: AppBundle:Article:remove }
+employes_liste:
+    path:       /employes
+    defaults:   {_controller: AppBundle:Employe:index }
+employe_create:
+    path:       /employe/create
+    defaults:   {_controller: AppBundle:Employe:create }
+    
+employe_remove:
+    path:       /employe/remove/{id}
+    defaults:   {_controller: AppBundle:Employe:remove }
