@@ -51,3 +51,7 @@ articles_liste:
 articles_update:
     path:      /article/{id}
     defaults:  { _controller: AppBundle:Article:update }
+    
+articles_remove:
+    path:      /article/{id}
+    defaults:  { _controller: AppBundle:Article:remove }

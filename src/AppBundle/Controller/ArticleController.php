@@ -12,6 +12,11 @@ class ArticleController extends Controller {
         return new Response('<html><body>Update Article !</body></html>');
     }
     
+    public function removeAction($id)
+    {
+        return new Response('<html><body>Remove Article !</body></html>');
+    }
+    
     public function indexAction()
     {
         return new Response('<html><body>Liste Articles !</body></html>');
