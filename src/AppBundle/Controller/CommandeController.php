@@ -43,4 +43,9 @@ class CommandeController extends Controller {
         return new Response('<html><body>Commencer commandes !</body></html>');
     }
     
+    public function importAction()
+    {
+        return new Response('<html><body>Import de commandes !</body></html>');
+    }
+    
 }

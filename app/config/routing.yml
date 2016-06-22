@@ -16,6 +16,10 @@ commandes_liste:
     path:      /commandes
     defaults:  { _controller: AppBundle:Commande:index }
     
+commandes_import:
+    path:      /commandes/import
+    defaults:  { _controller: AppBundle:Commande:import }
+    
 start:
     path:      /start
     defaults:  { _controller: AppBundle:Commande:next }  
