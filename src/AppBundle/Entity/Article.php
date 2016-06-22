@@ -3,9 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Repository\ArticleRepository;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleRepository")
  */
 class Article
 {
@@ -31,7 +32,20 @@ class Article
      */
     private $prix;
     
-    function getId() {
+    /**
+     * @ORM\Column(type="boolean", options={"default":true})
+     */
+    private $active;
+    
+    function getActive() {
+        return $this->active;
+    }
+
+    function setActive($active) {
+        $this->active = $active;
+    }
+
+        function getId() {
         return $this->id;
     }
 

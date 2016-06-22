@@ -15,14 +15,25 @@ class ArticleController extends Controller {
     
     public function removeAction($id)
     {
-        return new Response('<html><body>Remove Article !</body></html>');
+        
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Article');
+        
+       $article = $repo->find($id);
+       if($article){
+           $article->setActive(false);
+           $em->persist($article);
+           $em->flush();
+       }
+        
+        return $this->redirectToRoute('articles_liste');
     }
     
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Article');
-        $articles = $repo->findAll();
+        $articles = $repo->getActiveArticles();
    
         return $this->render('AppBundle:articles:liste_articles.html.twig',['articles' => $articles]);
     }
