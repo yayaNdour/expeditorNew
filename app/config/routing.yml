@@ -9,7 +9,3 @@ app:
 user_bundle:
    resource: "@UserBundle/Resources/config/routing.yml"
    
-   
-hello:
-    path:      /man
-    defaults:  { _controller: AppBundle:Commande:index }
