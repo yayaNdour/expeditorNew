@@ -7,12 +7,19 @@
         <style>
             body {
                 padding-top: 20px;
+                background-color: #245269; 
+                background-image: url('{{ asset('assets/images/mountain.jpg')}}');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment:fixed;
             }
-            #login{
-                padding-top: 80px;
-            }
-            #login-title-row{
-                padding-bottom: 20px;
+            
+            #login-form{
+                margin-top: 80px;
+                padding: 15px;
+                border-radius: 10px;
+                background-color: rgb(255, 255, 255);
+                background-color: rgba(255, 255, 255, 0.8);
             }
         </style>
         {% block stylesheets %}{% endblock %}

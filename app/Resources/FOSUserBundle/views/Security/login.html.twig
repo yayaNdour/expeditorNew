@@ -5,18 +5,12 @@
     <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
 {% endif %}
 
-<div id="login">
-    <div id="login-title-row" class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <h1 class="text-center">Expeditor</h1>
-        </div>
-        <div class="col-md-4"></div>
-    </div>
-    
-    <div id="login-form-row" class="row">
-        <div class="col-sm-3 col-md-4"></div>
-        <form class="col-sm-6 col-md-4" action="{{ path("fos_user_security_check") }}" method="post">
+
+<div class="row">
+    <div class="col-sm-3 col-md-4"></div>
+    <div id="login-form" class="col-sm-6 col-md-4">
+        <h1 class="text-center">Expeditor</h1>
+        <form class="" action="{{ path("fos_user_security_check") }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             <div class="form-group">
                 <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
@@ -33,9 +27,10 @@
             </div>
           <button type="submit" class="btn btn-info" id="_submit" name="_submit" >{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
         </form>
-        <div class="col-sm-3 col-md-4"></div>
     </div>
+    <div class="col-sm-3 col-md-4"></div>
 </div>
+
         
 {% endblock fos_user_content %}
 
