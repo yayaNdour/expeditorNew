@@ -144,7 +144,7 @@ class CommandeController extends Controller {
                 
                 if($row>1){
                     $commande = new Commande();
-                    $ligneCommandes = new LigneCommande();
+                    $ligneCommandes = array();
 
                     for ($c=0; $c < $num; $c++) {
                         $this->constructCommande($commande,$ligneCommandes, $dataFile[$c], $c);
@@ -157,6 +157,7 @@ class CommandeController extends Controller {
                     //If Commande not exist
                     //Insert
                     if(is_null($commandeBDD)==TRUE){
+                        //save commande
                         $commande->setEtat(2);
                         $commande->setDateTraitement(0);
                         $commande->setCommentaire("");
@@ -165,6 +166,14 @@ class CommandeController extends Controller {
 
                         $em->persist($commande);
                         $em->flush();
+                        
+                        $repo = $em->getRepository('AppBundle:LigneCommande');
+                        foreach ($ligneCommandes as $key => $ligneCommande) {
+                            var_dump($ligneCommande);
+                            $em->persist($ligneCommande);
+                            $em->flush();
+                        }
+                        
                     }
                     
                 }
@@ -190,15 +199,32 @@ class CommandeController extends Controller {
                 $commande->setAdresseClient($value);
                 break;
             case 4:
-                /*
+                $em = $this->getDoctrine()->getManager();
+                $repo = $em->getRepository('AppBundle:Article');
                 foreach (explode(";",$value) as $key => $value)
                 {
-                    $articleName=
-                    $ligneCommande = new LigneCommande();
-                    $ligneCommande->se
-                    $ligneCommandes
+                    $valueEncode= utf8_decode($value);
+                    $parenthesePosition = strpos($valueEncode, "(");
+                    
+                    $articleName= substr($valueEncode,0,$parenthesePosition-1);
+                    $articleQuantite= substr($valueEncode,$parenthesePosition+1,-1);
+                    
+                    $articleBDD = $repo->findOneBy(array('nom' => $articleName));
+                    
+                    if(isset($articleBDD)==TRUE){
+                        $ligneCommande = new LigneCommande();
+                        $ligneCommande->setArticle($articleBDD);
+                        $ligneCommande->setCommande($commande);
+                        $ligneCommande->setQuantiteTotal((int)$articleQuantite);
+                        $ligneCommande->setQuantiteEnCours(0);
+                        
+                        
+                        array_push($ligneCommandes,$ligneCommande);
+                        
+                    }
+                    
                 }
-                 * */
+                 
                 break;
             default:
                 break;
