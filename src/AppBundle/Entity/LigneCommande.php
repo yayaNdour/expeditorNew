@@ -33,8 +33,6 @@ class LigneCommande {
      */
     private $quantiteEnCours;
 
-    
-   
     function getCommande() {
         return $this->commande;
     }

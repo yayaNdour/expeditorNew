@@ -78,7 +78,17 @@ class CommandeController extends Controller {
     
     public function printAction($id)
     {
-        return new Response('<html><body>print Commande !</body></html>');
+                $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Commande');
+        
+        $commande = $repo->find($id);
+        if(!$commande){
+            return $this->redirectToRoute('commandes_liste');
+        }
+        $repo = $em->getRepository('AppBundle:LigneCommande');
+        $lignes = $repo->getLigneCommande($id);
+        
+        return $this->render('AppBundle:commandes:print_commande.html.twig',['commande' => $commande, 'lignes' => $lignes]);
     }
     
     public function indexAction()

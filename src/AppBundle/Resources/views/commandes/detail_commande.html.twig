@@ -29,7 +29,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-info" href="{{ path('commande_print', {'id': commande.id} ) }}">Imprimer</a>
+            <a target="_blank" class="btn btn-info" href="{{ path('commande_print', {'id': commande.id} ) }}">Imprimer</a>
             <a class="btn btn-info finish" href="{{ path('commande_finish', {'id': commande.id} ) }}" style="display:none;" >Fini</a>
         </div>
     </div>

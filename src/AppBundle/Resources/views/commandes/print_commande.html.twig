@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Expeditor</title>
+        <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+        <style>
+            body{
+                //background-color: #ddd;
+                background-color: #245269; 
+                background-image: url('{{ asset('assets/images/mountain.jpg')}}');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment:fixed;
+            }
+            
+            .main-page{
+                padding-top: 20px;
+                background-color: #FFF;
+                height: 100vh;
+            }
+            
+            .footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 60px;
+                background-color: #f5f5f5;
+            }
+            
+            .image-center{
+                margin: 0 auto;
+            }
+            
+        </style>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    
+    <body>
+        
+        <div class="container-fluid main-page">
+            {% set totalqte, totalpoids = 0, 0 %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Expeditor</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    A : </br>
+                    {{ commande.nomClient }}</br>
+                    {{ commande.adresseClient }}</br></br></br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <tr><th>Article</th><th>Quantité</th><th>Poids</th></tr>
+                        {% for ligne in lignes %}
+                            {% set totalqte = totalqte+ligne.quantiteEnCours %}
+                            {% set totalpoids = totalpoids+ligne.quantiteEnCours*ligne.article.poids %}
+                            <tr>
+                                <td>{{ ligne.article.nom }}</td>
+                                <td>{{ ligne.quantiteEnCours }}</td>
+                                <td>{{ ligne.quantiteEnCours*ligne.article.poids|number_format }}g</td>
+                            </tr>   
+                        {% endfor %}
+                        <tr><th>Total</th>
+                            <td>{{ totalqte }}</td>
+                            <td>{{ totalpoids|number_format }}g</td>
+                        </tr>
+                    </table>        
+                </div>
+            </div>
+        </div>
+        <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                window.print();
+            });
+        </script>
+    </body>
+</html>
