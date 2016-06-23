@@ -135,7 +135,6 @@ class CommandeController extends Controller {
         if ($form->isValid()) {
             $file = $form->getData()['file'];
 
-            $fileName = 'test.'.$file->guessExtension();
              $file->move(
                 $this->container->getParameter('import_directory'),
                 $file->getClientOriginalName()
@@ -156,6 +155,7 @@ class CommandeController extends Controller {
         $commandes=array();
         $em = $this->getDoctrine()->getManager();
         $row = 1;
+        exit(var_dump(fopen($filePath, "r")));
         if (($handle = fopen($filePath, "r")) !== FALSE) {
             
             while (($dataFile = fgetcsv($handle, 0, ",")) !== FALSE) {
