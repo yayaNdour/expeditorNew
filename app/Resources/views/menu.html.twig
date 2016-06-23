@@ -12,7 +12,7 @@
             <!--
             <a class="navbar-brand" href="#">Expeditor</a>
             -->
-            <a class="navbar-brand" rel="home" href="#" title="Expeditor">
+            <a class="navbar-brand" rel="home" href="{{ path('commandes_liste') }}" title="Expeditor">
                 <img style="max-width:65px; margin-top: -8px;"
                      src="{{ asset('assets/images/logo.png')}}">
             </a>
@@ -30,13 +30,14 @@
                 {% endif %}
                 
                 {% if is_granted('ROLE_EMPLOYE') %}
-                    <li {{ (app.request.attributes.get('_route') == 'start') ? ' class="active"' }}><a href="{{ path('start')}}">Faire commande</a></li>
+                    <li {{ (app.request.attributes.get('_route') == 'commandes_liste') ? ' class="active"' }}><a href="{{ path('commandes_liste')}}">Commandes</a></li>
+                    <li {{ ((app.request.attributes.get('_route') == 'start') or  (app.request.attributes.get('_route') == 'commande_show')) ? ' class="active"' }}><a href="{{ path('start')}}">Ma commande en cours</a></li>
                 {% endif %}
                 
             </ul>
-            
+             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <p class="text-right">Bonjour {{app.user.username}}, <a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a> </p>
-        
+            {% endif %}
         </div><!--/.nav-collapse -->
         
         

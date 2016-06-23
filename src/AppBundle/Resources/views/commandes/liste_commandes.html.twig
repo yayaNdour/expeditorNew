@@ -33,14 +33,16 @@
     <div class="row">
         <div class="col-md-12">
             <table class="table table-striped">
-                <tr><th>Commande</th><th>Status</th><th>Employé</th><th>Action</th></th></tr>
+                <tr><th>Commande</th><th>Status</th><th>Employé</th>{{ is_granted('ROLE_MANAGER') ? '<th>Action</th>' :""}}</tr>
                 {% for commande in commandes %}
                     <tr>
                         <td>{{ commande.numCommande }}</td>
                         <td>{{ commande.etat == 1 ? "En cours" : "En attente" }}</td>
                         <td>{{ commande.etat == 1 ? commande.employe.username : "" }}</td>
-                        <td><a class="btn btn-info" {{ commande.etat == 0 ? "style='display:none;'" : "" }} href="{{ path('commande_free', {'id': commande.id} ) }}">Libérer la commande</a></td>
-                    </tr>   
+                       {% if is_granted('ROLE_MANAGER') %}
+                            <td><a class="btn btn-info" {{ commande.etat == 0 ? "style='display:none;'" : "" }} href="{{ path('commande_free', {'id': commande.id} ) }}">Libérer la commande</a></td>
+                        {% endif %}
+                       </tr>   
                 {% endfor %}
             </table>        
         </div>

@@ -23,9 +23,9 @@ class ArticleController extends Controller {
         }
        
       $form = $this->createFormBuilder($article)
-              ->add('nom','text')
-              ->add('poids','number')
-              ->add('prix','number')
+              ->add('nom','text', ['label'=> 'Nom: '])
+              ->add('poids','number',['label'=> 'Poids(g): '])
+              ->add('prix','number',['label'=> 'Prix(€): '])
               ->add('submit','submit')
               ->getForm();
       
