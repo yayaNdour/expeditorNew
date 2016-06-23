@@ -150,10 +150,14 @@ class CommandeController extends Controller {
     }
     
     private function csvReader($filePath){
+        
+        $filePath = str_replace("/", "\\", $filePath);
+        
         $commandes=array();
         $em = $this->getDoctrine()->getManager();
         $row = 1;
         if (($handle = fopen($filePath, "r")) !== FALSE) {
+            
             while (($dataFile = fgetcsv($handle, 0, ",")) !== FALSE) {
                 $num = count($dataFile);
                 
@@ -171,14 +175,14 @@ class CommandeController extends Controller {
                     
                     //If Commande not exist
                     //Insert
-                    if(is_null($commandeBDD)==TRUE){
+                    if(isset($commandeBDD)){
                         //save commande
                         $commande->setEtat(2);
                         $commande->setDateTraitement(0);
                         $commande->setCommentaire("");
 
                         array_push($commandes,$commande);
-
+                        
                         $em->persist($commande);
                         $em->flush();
                         
