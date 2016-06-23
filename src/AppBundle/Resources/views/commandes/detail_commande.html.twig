@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% set totalqte = 0 %}
 {% block body %}
     <div class="row">
         <div class="col-md-12">
@@ -9,22 +9,72 @@
     <div class="row">
         <div class="col-md-12">
             <table class="table table-striped">
-                <tr><th>Article</th><th>Quantité total</th><th>Quantité en carton</th><th>Poids</th></th></tr>
+                <tr><th>Article</th><th>Quantité total</th><th>Quantité en carton</th><th>Poids</th></tr>
                 {% for ligne in lignes %}
+                    {% set totalqte = totalqte+ligne.quantiteTotal %}
                     <tr>
-                        <td>{{ ligne.article.nom }}</td>
-                        <td>{{ ligne.quantiteTotal }}</td>
-                        <td>{{ ligne.quantiteEnCours }}</td>
-                        <td>???</td>
+                        <td>{{ ligne.article.nom }} (<span class="weight{{ ligne.article.id }}">{{ ligne.article.poids|number_format }}</span>g)</td>
+                        <td><span class="qte{{ ligne.article.id }}">{{ ligne.quantiteTotal }}</span></td>
+                        <td><input class="qte qte{{ ligne.article.id }}" type="number" data-article="{{ ligne.article.id }}" value="{{ ligne.quantiteEnCours }}" min="0" max="{{ ligne.quantiteTotal }}"></td>
+                        <td><span class="weight-qte{{ ligne.article.id }}">{{ ligne.quantiteEnCours*ligne.article.poids|number_format }}</span>g</td>
                     </tr>   
                 {% endfor %}
+                <tr><th>Total</th>
+                    <td>{{ totalqte }}</td>
+                    <td><span class="qte-total">0</span></td>
+                    <td><span class="weight-qte-total">0</span>g</td>
+                </tr>
             </table>        
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <a class="btn btn-info" href="{{ path('commande_print', {'id': commande.id} ) }}">Imprimer</a>
-            <a class="btn btn-info" href="{{ path('commande_finish', {'id': commande.id} ) }}">Fini</a>
+            <a class="btn btn-info finish" href="{{ path('commande_finish', {'id': commande.id} ) }}" style="display:none;" >Fini</a>
         </div>
     </div>
+{% endblock  %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    function updateWeight(id){
+        var qte = parseInt($( "input.qte"+id ).val(),0);
+        var weight = parseInt($( "span.weight"+id ).text(), 0);
+        var total = qte*weight;
+        $( "span.weight-qte"+id ).text(total+"");
+    }
+    function updateTotal(){
+        var total = 0;
+        var totalweight = 0;
+        var ok = true;
+        $('input.qte').each(function(){
+            var qtePrevu = parseInt($( "span.qte"+$(this).data("article") ).text(),0);
+            var qte = parseInt($( "input.qte"+$(this).data("article") ).val(),0);
+            var weight = parseInt($( "span.weight"+$(this).data("article") ).text(), 0);
+            total += qte;
+            totalweight += qte*weight;
+            if(qtePrevu!=qte){
+                ok = false;
+            }
+        });
+        $( "span.qte-total").text(total+"");
+        $( "span.weight-qte-total").text(totalweight+"");
+        if(ok){
+            $("a.finish").show();
+        }else{
+            $("a.finish").hide();
+        }
+    }
+    $( "input.qte" ).change(function() {
+        updateWeight($(this).data("article"));
+        updateTotal();
+        $.ajax({
+          url      : "{{ url('homepage') }}commande/update/{{ commande.id }}/"+$(this).data("article")+"/"+$(this).val(), 
+          cache    : false     
+        });
+    });
+    $( document ).ready(function() {
+        updateTotal();
+    });
+</script>
 {% endblock  %}

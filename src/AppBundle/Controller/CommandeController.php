@@ -39,9 +39,23 @@ class CommandeController extends Controller {
         return $this->redirectToRoute('commandes_liste');
     }
     
-    public function updateAction($id)
+    public function updateAction($id, $articleId, $qte)
     {
-        return new Response('<html><body>update Commande !</body></html>');
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Commande');
+        $commande = $repo->find($id);
+        $repo = $em->getRepository('AppBundle:Article');
+        $article = $repo->find($articleId);
+        if(!$article || !$commande)
+            return new Response('');
+        $repo = $em->getRepository('AppBundle:LigneCommande');
+        $lignes = $repo->getLigneCommandeArticle($id, $articleId);
+        foreach ( $lignes as $ligne){
+            $ligne->setQuantiteEnCours($qte);
+            $em->persist($ligne);
+            $em->flush();
+        }
+        return new Response('');
     }
     
     public function finishAction($id)

@@ -36,6 +36,7 @@ security:
         # - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # Listing des commandes
+        - { path: ^/$, role: [ROLE_EMPLOYE, ROLE_MANAGER] }
         - { path: ^/commandes$, role: [ROLE_EMPLOYE, ROLE_MANAGER] }
         # Commencer (ou reprendre) une commande
         - { path: ^/start/, role: ROLE_EMPLOYE }                   

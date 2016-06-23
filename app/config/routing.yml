@@ -12,6 +12,9 @@ user_bundle:
 # app_bundle:
 #    resource: "@AppBundle/Resources/config/routing.yml"
 #    
+homepage:
+    path: /
+    defaults:  { _controller: AppBundle:Commande:index }
 commandes_liste:
     path:      /commandes
     defaults:  { _controller: AppBundle:Commande:index }
@@ -33,7 +36,7 @@ commande_free:
     defaults:  { _controller: AppBundle:Commande:free }  
     
 commande_update:
-    path:      /commande/update/{id}
+    path:      /commande/update/{id}/{articleId}/{qte}
     defaults:  { _controller: AppBundle:Commande:update }  
     
 commande_finish:
