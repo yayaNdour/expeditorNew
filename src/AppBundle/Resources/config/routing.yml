@@ -24,7 +24,11 @@ commande_finish:
     
 commande_print:
     path:      /commande/print/{id}
-    defaults:  { _controller: AppBundle:Commande:print }  
+    defaults:  { _controller: AppBundle:Commande:print }
+
+commande_import:
+    path:      /commande/import
+    defaults:  { _controller: AppBundle:Commande:import }  
     
 articles_liste:
     path:      /articles$
