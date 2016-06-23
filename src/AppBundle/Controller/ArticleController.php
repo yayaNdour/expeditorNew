@@ -12,16 +12,15 @@ use AppBundle\Entity\Article;
 
 class ArticleController extends Controller {
     
-    public function updateAction(Request $request,Article $id)
+    public function updateAction(Request $request,Article $id = null)
     {
         $formFactory = Forms::createFormFactory();
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Article');
-        
-        $article = $repo->find($id);
-        
-        if($article == null){
+
+        if($id == null){
             $article = new Article();
+        } else{
+            $article = $id;
         }
        
       $form = $this->createFormBuilder($article)
@@ -34,11 +33,10 @@ class ArticleController extends Controller {
       
        $form->handleRequest($request);
         if ($form->isValid()) {
-            exit(var_dump($article));
+            $article->setActive(true);
             $em->persist($article);
             $em->flush();
             return $this->redirectToRoute('articles_liste');
-
         }
        
         return $this->render('AppBundle:articles:edit_article.html.twig',['form' => $form->createView()]);

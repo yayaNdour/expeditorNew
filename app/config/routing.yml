@@ -50,7 +50,7 @@ articles_liste:
     
 article_update:
     path:      /article/{id}
-    defaults:  { _controller: AppBundle:Article:update }
+    defaults:  { _controller: AppBundle:Article:update, id: null }
     
 article_remove:
     path:      /article/remove/{id}

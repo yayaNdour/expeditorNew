@@ -79,7 +79,7 @@ class Article
 
    
     
-    function __construct($nom, $poids, $prix) {
+    function __construct($nom=null, $poids=null, $prix=null) {
         $this->nom = $nom;
         $this->poids = $poids;
         $this->prix = $prix;
