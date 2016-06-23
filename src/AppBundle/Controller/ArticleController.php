@@ -14,7 +14,6 @@ class ArticleController extends Controller {
     
     public function updateAction(Request $request,Article $id = null)
     {
-        $formFactory = Forms::createFormFactory();
         $em = $this->getDoctrine()->getManager();
 
         if($id == null){

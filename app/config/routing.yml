@@ -68,3 +68,7 @@ employe_create:
 employe_remove:
     path:       /employe/remove/{id}
     defaults:   {_controller: AppBundle:Employe:remove }
+    
+statistiques:
+    path:       /commandes/stats/{id}
+    defaults:   {_controller: AppBundle:Commande:stats, id: null }

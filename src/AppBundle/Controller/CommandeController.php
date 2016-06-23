@@ -112,4 +112,18 @@ class CommandeController extends Controller {
         return new Response('<html><body>Import de commandes !</body></html>');
     }
     
+    
+    public function statsAction(){
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Commande');
+        
+        $day_start = strtotime('today midnight');
+        $day_end = strtotime('tomorrow midnight');
+        
+        $stats = $repo->getNbFinishedCommandeByEmploye($day_start,$day_end);
+        
+        return $this->render('AppBundle:commandes:stats_employe.html.twig',['stats' => $stats]);
+
+    }
+    
 }
