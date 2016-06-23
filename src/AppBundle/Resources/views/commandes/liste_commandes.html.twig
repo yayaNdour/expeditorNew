@@ -1,6 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-filestyle.min.js') }}"> </script>
+    <script>
+        /*$(":file").filestyle();*/
+    </script>
+{% endblock %}
+
     <div class="row">
         <div class="col-md-12">
             <a class="btn btn-submit" href="{{ path('start') }}">GO !</a>
@@ -8,7 +18,16 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h1> Liste des commandes </h1>
+            <h1>
+                Liste des commandes
+                <!--
+                href="{{ path('commandes_import') }}
+                -->
+                <a class="btn btn-success pull-right" data-toggle="modal" data-target="#modalImportCommande">
+                    <span class="glyphicon glyphicon-import"></span> Import 
+                </a>
+            </h1>
+            
         </div>
     </div>
     <div class="row">
@@ -26,4 +45,27 @@
             </table>        
         </div>
     </div>
+    
+                
+                
+                
+<!-- Modal -->
+<div class="modal fade" id="modalImportCommande" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Importer commandes</h4>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <input type="file" class="filestyle" data-input="false" data-buttonText="Choisir un fichier">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Importer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock  %}
