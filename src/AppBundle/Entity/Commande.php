@@ -50,14 +50,17 @@ class Commande {
      */
     private $ligneCommande;
     
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Client")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="client", referencedColumnName="id")
-     * })
+
+    /** 
+     * @ORM\Column(type="string", length=500)
      */
-    private $client;
+    private $nomClient;
+    
+
+    /** 
+     * @ORM\Column(type="string", length=500)
+     */
+    private $adresseClient;
     
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\Utilisateur")
@@ -67,6 +70,19 @@ class Commande {
      * })
      */
     private $employe;
+
+    function __construct($id, $numCommande, $etat, $date, $dateTraitement, $commentaire, $ligneCommande, $nomClient, $adresseClient, $employe) {
+        $this->id = $id;
+        $this->numCommande = $numCommande;
+        $this->etat = $etat;
+        $this->date = $date;
+        $this->dateTraitement = $dateTraitement;
+        $this->commentaire = $commentaire;
+        $this->ligneCommande = $ligneCommande;
+        $this->nomClient = $nomClient;
+        $this->adresseClient = $adresseClient;
+        $this->employe = $employe;
+    }
     
     function getId() {
         return $this->id;
@@ -96,8 +112,12 @@ class Commande {
         return $this->ligneCommande;
     }
 
-    function getClient() {
-        return $this->client;
+    function getNomClient() {
+        return $this->nomClient;
+    }
+
+    function getAdresseClient() {
+        return $this->adresseClient;
     }
 
     function getEmploye() {
@@ -132,23 +152,15 @@ class Commande {
         $this->ligneCommande = $ligneCommande;
     }
 
-    function setClient($client) {
-        $this->client = $client;
+    function setNomClient($nomClient) {
+        $this->nomClient = $nomClient;
+    }
+
+    function setAdresseClient($adresseClient) {
+        $this->adresseClient = $adresseClient;
     }
 
     function setEmploye($employe) {
-        $this->employe = $employe;
-    }
-
-    function __construct($id, $numCommande, $etat, $date, $dateTraitement, $commentaire, $ligneCommande, $client, $employe) {
-        $this->id = $id;
-        $this->numCommande = $numCommande;
-        $this->etat = $etat;
-        $this->date = $date;
-        $this->dateTraitement = $dateTraitement;
-        $this->commentaire = $commentaire;
-        $this->ligneCommande = $ligneCommande;
-        $this->client = $client;
         $this->employe = $employe;
     }
 
