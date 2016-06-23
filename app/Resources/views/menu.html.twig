@@ -33,9 +33,9 @@
                 {% endif %}
                 
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
-            </ul>
+            
+                <p class="text-right">Bonjour {{app.user.username}}, <a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a> </p>
+        
         </div><!--/.nav-collapse -->
         
         
