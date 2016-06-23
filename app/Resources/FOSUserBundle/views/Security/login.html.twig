@@ -1,9 +1,7 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-{% if error %}
-    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
-{% endif %}
+
 
 {% block stylesheets %}
     {{ parent() }}
@@ -34,7 +32,9 @@
     <div class="col-sm-3 col-md-4"></div>
     <div id="login-form" class="col-sm-6 col-md-4">
         <img id="login-logo" class="img-responsive image-center" src="{{ asset('assets/images/logo.png')}}" width="40%"/>
-        
+        {% if error %}
+            <div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
+        {% endif %}
         <form action="{{ path("fos_user_security_check") }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             <div class="form-group">
