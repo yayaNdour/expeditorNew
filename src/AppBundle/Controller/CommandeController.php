@@ -4,6 +4,9 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 use AppBundle\Entity\Commande;
 use AppBundle\Entity\LigneCommande;
 
@@ -119,22 +122,34 @@ class CommandeController extends Controller {
         return $this->redirectToRoute('commandes_liste');
     }
     
-    public function importAction()
+    public function importAction(Request $request)
     {
         
-        $filePath = "C:\Users\d1410galipauda\Desktop\JEU DE DONNEES\CSV.csv";
-        //$filePath = "C:\Users\d1410galipauda\Desktop\JEU DE DONNEES\XLS.xls";
+        $form = $this->createFormBuilder()
+                ->add('file','file')
+                ->add('importer','submit')
+                ->getForm();
+
+        $form->handleRequest($request);
         
-        $commandes = $this->csvReader($filePath);
-        //$commandes = $this->xlsReader($filePath);
-        
-        
-        return new Response('<html><body>'.var_dump($commandes).'</body></html>');
+        if ($form->isValid()) {
+            $file = $form->getData()['file'];
+
+            $fileName = 'test.'.$file->guessExtension();
+             $file->move(
+                $this->container->getParameter('import_directory'),
+                $file->getClientOriginalName()
+            );
+
+            $commandes = $this->csvReader($this->container->getParameter('import_directory').'/'.$file->getClientOriginalName());
+            //$commandes = $this->xlsReader($filePath);
+        }
+
+        return $this->render('AppBundle:commandes:import_commandes.html.twig',['form' => $form->createView()]);
          
     }
     
     private function csvReader($filePath){
-        
         $commandes=array();
         $em = $this->getDoctrine()->getManager();
         $row = 1;
