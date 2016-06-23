@@ -31,7 +31,7 @@
                 
                 {% if is_granted('ROLE_EMPLOYE') %}
                     <li {{ (app.request.attributes.get('_route') == 'commandes_liste') ? ' class="active"' }}><a href="{{ path('commandes_liste')}}">Commandes</a></li>
-                    <li {{ ((app.request.attributes.get('_route') == 'start') or  (app.request.attributes.get('_route') == 'commande_show')) ? ' class="active"' }}><a href="{{ path('start')}}">Ma commande en cours</a></li>
+                    <li {{ ((app.request.attributes.get('_route') == 'start') or  (app.request.attributes.get('_route') == 'commande_show')) ? ' class="active"' }}><a href="{{ path('start')}}">Traiter une commande</a></li>
                 {% endif %}
                 
             </ul>
