@@ -67,7 +67,7 @@ class LigneCommande {
         $this->quantiteEnCours = $quantiteEnCours;
     }
     
-    function __construct($commande, $article, $quantiteTotal, $quantiteEnCours) {
+    function __construct($commande=null, $article=null, $quantiteTotal=null, $quantiteEnCours=null) {
         $this->commande = $commande;
         $this->article = $article;
         $this->quantiteTotal = $quantiteTotal;

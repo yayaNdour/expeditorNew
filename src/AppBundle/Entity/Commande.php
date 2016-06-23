@@ -70,8 +70,9 @@ class Commande {
      * })
      */
     private $employe;
-
-    function __construct($id, $numCommande, $etat, $date, $dateTraitement, $commentaire, $ligneCommande, $nomClient, $adresseClient, $employe) {
+    
+    
+    function __construct($id=null, $numCommande=null, $etat=null, $date=null, $dateTraitement=null, $commentaire=null, $ligneCommande=null, $nomClient=null, $adresseClient=null, $employe=null) {
         $this->id = $id;
         $this->numCommande = $numCommande;
         $this->etat = $etat;
