@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Commande;
+use AppBundle\Entity\LigneCommande;
 
 
 class CommandeController extends Controller {
@@ -109,7 +111,88 @@ class CommandeController extends Controller {
     
     public function importAction()
     {
-        return new Response('<html><body>Import de commandes !</body></html>');
+        
+        $filePath = "C:\Users\d1410galipauda\Desktop\JEU DE DONNEES\CSV.csv";
+        //$filePath = "C:\Users\d1410galipauda\Desktop\JEU DE DONNEES\XLS.xls";
+        
+        $commandes = $this->csvReader($filePath);
+        //$commandes = $this->xlsReader($filePath);
+        
+        
+        return new Response('<html><body>'.var_dump($commandes).'</body></html>');
+         
+    }
+    
+    private function csvReader($filePath){
+        
+        $commandes=array();
+        $em = $this->getDoctrine()->getManager();
+        $row = 1;
+        if (($handle = fopen($filePath, "r")) !== FALSE) {
+            while (($dataFile = fgetcsv($handle, 0, ",")) !== FALSE) {
+                $num = count($dataFile);
+                
+                if($row>1){
+                    $commande = new Commande();
+                    $ligneCommandes = new LigneCommande();
+
+                    for ($c=0; $c < $num; $c++) {
+                        $this->constructCommande($commande,$ligneCommandes, $dataFile[$c], $c);
+                    }
+                    
+                    $repo = $em->getRepository('AppBundle:Commande');
+        
+                    $commandeBDD = $repo->findBy(array('numCommande' => $commande->getNumCommande()));
+                    
+                    //If Commande not exist
+                    //Insert
+                    if(is_null($commandeBDD)==TRUE){
+                        $commande->setEtat(2);
+                        $commande->setDateTraitement(0);
+                        $commande->setCommentaire("");
+
+                        array_push($commandes,$commande);
+
+                        $em->persist($commande);
+                        $em->flush();
+                    }
+                    
+                }
+                $row++;
+            }
+            fclose($handle);
+        }
+        return $commandes;
+    }
+    
+    private function constructCommande(&$commande,&$ligneCommandes,$value,$index){
+        switch ($index) {
+            case 0:
+                $commande->setDate(strtotime($value));
+                break;
+            case 1:
+                $commande->setNumCommande(substr($value, strlen("Cmd N° ")));
+                break;
+            case 2:
+                $commande->setNomClient($value);
+                break;
+            case 3:
+                $commande->setAdresseClient($value);
+                break;
+            case 4:
+                /*
+                foreach (explode(";",$value) as $key => $value)
+                {
+                    $articleName=
+                    $ligneCommande = new LigneCommande();
+                    $ligneCommande->se
+                    $ligneCommandes
+                }
+                 * */
+                break;
+            default:
+                break;
+        }
     }
     
     
