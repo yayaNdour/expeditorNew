@@ -8,7 +8,7 @@
 /app/phpunit.xml
 /build/
 /vendor/
-!vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+!vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form/
 /bin/
 /nbproject/*
 /composer.phar
