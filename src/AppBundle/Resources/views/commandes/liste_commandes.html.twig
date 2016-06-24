@@ -37,7 +37,32 @@
                         <td>{{ commande.etat == 1 ? "En cours" : "En attente" }}</td>
                         <td>{{ commande.etat == 1 ? commande.employe.username : "" }}</td>
                        {% if is_granted('ROLE_MANAGER') %}
-                            <td><a class="btn btn-info" {{ commande.etat == 0 ? "style='display:none;'" : "" }} href="{{ path('commande_free', {'id': commande.id} ) }}">Libérer la commande</a></td>
+                            <td>
+                                <button class="btn btn-primary" {{ commande.etat == 0 ? "style='display:none;'" : "" }} data-toggle="modal" data-target="#myModal{{ commande.id }}">
+                                    Libérer la commande
+                                </button>
+                            </td>
+                            <div class="modal fade" id="myModal{{ commande.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel{{ commande.id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Commentaire</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ path('commande_free', {'id': commande.id} ) }}" method="get">
+                                                <div>
+                                                    <label for="message">Commentaire : </label>
+                                                    <input type="text" id="message" />
+                                                </div>
+                                                <div class="button">
+                                                    <button type="submit" class="btn btn-primary">Envoyer votre message</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
                         {% endif %}
                        </tr>   
                 {% endfor %}

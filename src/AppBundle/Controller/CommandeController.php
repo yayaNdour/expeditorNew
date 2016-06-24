@@ -28,7 +28,7 @@ class CommandeController extends Controller {
         return $this->render('AppBundle:commandes:detail_commande.html.twig',['commande' => $commande, 'lignes' => $lignes]);
     }
     
-    public function freeAction($id)
+    public function freeAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Commande');
@@ -37,6 +37,7 @@ class CommandeController extends Controller {
         if($commande){
            $commande->setEmploye(null);
            $commande->setEtat(0);
+           $commande->setCommentaire($request->request->get('message', ''));
            $em->persist($commande);
            $em->flush();
         }
@@ -81,7 +82,7 @@ class CommandeController extends Controller {
     
     public function printAction($id)
     {
-                $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Commande');
         
         $commande = $repo->find($id);
