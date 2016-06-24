@@ -229,14 +229,15 @@ class CommandeController extends Controller {
                 $repo = $em->getRepository('AppBundle:Article');
                 foreach (explode(";",$value) as $key => $value)
                 {
-                    $valueEncode= utf8_decode($value);
+                    $valueEncode= $value;
                     $parenthesePosition = strpos($valueEncode, "(");
                     
-                    $articleName= substr($valueEncode,0,$parenthesePosition-1);
+                    $articleName= trim(substr($valueEncode,0,$parenthesePosition-1));
+                    
+
                     $articleQuantite= substr($valueEncode,$parenthesePosition+1,-1);
                     
                     $articleBDD = $repo->findOneBy(array('nom' => $articleName));
-                    
                     if(isset($articleBDD)==TRUE){
                         $ligneCommande = new LigneCommande();
                         $ligneCommande->setArticle($articleBDD);
@@ -248,9 +249,9 @@ class CommandeController extends Controller {
                         array_push($ligneCommandes,$ligneCommande);
                         
                     }
-                    
+
                 }
-                 
+                
                 break;
             default:
                 break;

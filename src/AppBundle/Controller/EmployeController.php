@@ -75,7 +75,7 @@ class EmployeController extends Controller {
         
        $utilisateur = $repo->find($id);
        if($utilisateur){
-           $utilisateur->setEnable(false);
+           $utilisateur->setEnabled(false);
            $em->persist($utilisateur);
            $em->flush();
        }
