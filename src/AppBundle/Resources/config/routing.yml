@@ -36,4 +36,4 @@ articles_liste:
     
 articles_update:
     path:      /article/{id}
-    defaults:  { _controller: AppBundle:Article:update }
+    defaults:  { _controller: AppBundle:Article:update}

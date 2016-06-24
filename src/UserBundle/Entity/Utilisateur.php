@@ -18,4 +18,18 @@ class Utilisateur extends BaseUser{
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    
+    
+    protected $test;
+    
+    function getTest() {
+        return $this->test;
+    }
+
+    function setTest($test) {
+        $this->test = $test;
+    }
+
+
 }

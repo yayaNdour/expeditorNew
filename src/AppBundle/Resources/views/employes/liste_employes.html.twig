@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Liste des employes </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">         
+                 <td> <a class=" glyphicon glyphicon-plus btn btn-success" href="{{ path('employe_create')}}"></a>
+        </div>
+        
+        
+    </div>
+        <br>
+        <br>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <tr><th>Nom</th><th>Action</th></th></tr>
+                {% for employe in employes %}
+                    <tr>
+                        <td>{{ employe.username }}</td>
+                        <td> <a class=" glyphicon glyphicon-pencil btn btn-info" href="{{ path('employe_update', {'id': employe.id})}}"></a> <a class="  glyphicon glyphicon-trash btn btn-danger" href="{{ path('employe_remove', {'id': employe.id}) }}"></a></td>
+                    </tr>   
+                {% endfor %}
+            </table>        
+        </div>
+    </div>
+{% endblock  %}

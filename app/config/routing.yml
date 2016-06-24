@@ -62,8 +62,11 @@ employes_liste:
     path:       /employes
     defaults:   {_controller: AppBundle:Employe:index }
 employe_create:
-    path:       /employe/create
+    path:       /employe
     defaults:   {_controller: AppBundle:Employe:create }
+employe_update:
+    path:       /employe/{id}
+    defaults:   {_controller: AppBundle:Employe:update }
     
 employe_remove:
     path:       /employe/remove/{id}
