@@ -177,7 +177,7 @@ class CommandeController extends Controller {
                     //Insert
                     if(isset($commandeBDD)){
                         //save commande
-                        $commande->setEtat(2);
+                        $commande->setEtat(0);
                         $commande->setDateTraitement(0);
                         $commande->setCommentaire("");
 
