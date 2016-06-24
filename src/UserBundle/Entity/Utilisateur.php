@@ -4,10 +4,11 @@ namespace UserBundle\Entity;
 
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Repository\EmployeRepository;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\EmployeRepository")
  */
 class Utilisateur extends BaseUser{
     
@@ -21,15 +22,4 @@ class Utilisateur extends BaseUser{
     
     
     
-    protected $test;
-    
-    function getTest() {
-        return $this->test;
-    }
-
-    function setTest($test) {
-        $this->test = $test;
-    }
-
-
 }

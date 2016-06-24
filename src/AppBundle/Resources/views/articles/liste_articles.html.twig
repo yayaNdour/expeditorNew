@@ -22,9 +22,14 @@
                         <td>{{ article.poids }}</td>
                         <td>{{ article.prix }}</td>
                         <td> <a class=" glyphicon glyphicon-pencil btn btn-info" title="Modifier l'article" href="{{ path('article_update', {'id': article.id} ) }}"></a> <a class="  glyphicon glyphicon-trash btn btn-danger" title="Supprimer l'article" href="{{ path('article_remove', {'id': article.id}) }}"></a></td>
-                    </tr>   
+                    </tr>  
                 {% endfor %}
             </table>        
         </div>
     </div>
+                
+                
+                
+                
+
 {% endblock  %}

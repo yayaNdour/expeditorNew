@@ -17,7 +17,7 @@ class EmployeController extends Controller {
     {
        $em= $this->getDoctrine()->getManager();
        $repo = $em->getRepository('UserBundle:Utilisateur');
-       $employes = $repo->findAll();
+       $employes = $repo->getEnabledEmploye();
        
         return $this->render('AppBundle:employes:liste_employes.html.twig',['employes' => $employes]);
     }
@@ -30,20 +30,14 @@ class EmployeController extends Controller {
            ->add('username','text')
            ->add('email','text')
            ->add('password','text')
-           ->add('test', 'choice', [
-                'choices' => [
-                    'ROLE_MANAGER' => 'Manager', 
-                    'ROLE_EMPLOYE' => 'Employe',
-                ]
-            ])
            ->add('sauvegarder','submit')
            ->getForm();   
        $form->handleRequest($request);
         if ($form->isValid()) {
-            $roles[] = $utilisateur->getTest();
-            $utilisateur->setRoles($roles);
+            $utilisateur->setRoles(array('ROLE_EMPLOYE'));
             $utilisateur->setEnabled(true);
             $utilisateur->setPlainPassword($utilisateur->getPassword());
+            $userManager->updateUser($utilisateur);
             $em->flush();            
             return $this->redirectToRoute('employes_liste');
         }      
@@ -59,20 +53,12 @@ class EmployeController extends Controller {
         $form = $this->createFormBuilder($utilisateur)
            ->add('username','text')
            ->add('email','text')
-           //->add('password','text')
-           ->add('test', 'choice', [
-                'choices' => [
-                    'ROLE_MANAGER' => 'Manager', 
-                    'ROLE_EMPLOYE' => 'Employe',
-                ]
-            ])
            ->add('modifier','submit')
            ->getForm();
         
+        $form->handleRequest($request);
         if ($form->isValid())
         {
-           $roles[] = $utilisateur->getTest();
-           $utilisateur->setRoles($roles);
            $userManager->updateUser($utilisateur);
            $em->flush();
            return $this->redirectToRoute('employes_liste');
@@ -83,6 +69,19 @@ class EmployeController extends Controller {
     
     public function removeAction($id)
     {
+         
+       $em = $this->getDoctrine()->getManager();
+       $repo = $em->getRepository('UserBundle:Utilisateur');
+        
+       $utilisateur = $repo->find($id);
+       if($utilisateur){
+           $utilisateur->setEnable(false);
+           $em->persist($utilisateur);
+           $em->flush();
+       }
+        
+        return $this->redirectToRoute('employes_liste');
+        
         
     }
 }
