@@ -20,9 +20,11 @@
                 {# <a class="btn btn-success pull-right" data-toggle="modal" data-target="#modalImportCommande">
                     <span class="glyphicon glyphicon-import"></span> Import 
                 </a> #}
-                <a class="btn btn-success pull-right glyphicon glyphicon-import" href="{{ path('commandes_import') }}">
-                    Importer 
-                </a>
+                {% if is_granted('ROLE_MANAGER') %}
+                    <a class="btn btn-success pull-right glyphicon glyphicon-import" href="{{ path('commandes_import') }}">
+                        Importer 
+                    </a>
+                {% endif %}
             </h1>
             
         </div>
@@ -30,12 +32,14 @@
     <div class="row">
         <div class="col-md-12">
             <table class="table table-striped">
-                <tr><th>Commande</th><th>Status</th><th>Employé</th>{{ is_granted('ROLE_MANAGER') ? '<th>Action</th>' :""}}</tr>
+                <tr><th>Commande</th><th>Status</th><th>Employé</th> <th>Client</th><th>Date</th>{{ is_granted('ROLE_MANAGER') ? '<th>Action</th>' :""}}</tr>
                 {% for commande in commandes %}
-                    <tr>
-                        <td>{{ commande.numCommande }}</td>
-                        <td>{{ commande.etat == 1 ? "En cours" : "En attente" }}</td>
-                        <td>{{ commande.etat == 1 ? commande.employe.username : "" }}</td>
+                        <tr>
+                        <td> {{ commande.numCommande }}</td>
+                        <td> {{ commande.etat == 1 ? "En cours" : "En attente" }}</td>
+                        <td> {{ commande.etat == 1 ? commande.employe.username : "" }}</td>
+                        <td> {{ commande.nomClient }} </td>
+                        <td> {{ commande.date|date("d/m/Y") }} </td>
                        {% if is_granted('ROLE_MANAGER') %}
                             <td>
                                 <button class="btn btn-primary" {{ commande.etat == 0 ? "style='display:none;'" : "" }} data-toggle="modal" data-target="#myModal{{ commande.id }}">
@@ -64,7 +68,7 @@
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
                         {% endif %}
-                       </tr>   
+                        </tr> 
                 {% endfor %}
             </table>        
         </div>
