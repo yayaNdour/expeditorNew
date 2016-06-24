@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 use AppBundle\Entity\Commande;
 use AppBundle\Entity\LigneCommande;
@@ -129,7 +130,7 @@ class CommandeController extends Controller {
     {
         
         $form = $this->createFormBuilder()
-                ->add('file','file')
+                ->add('file','file', ['label' => "Fichier"])
                 ->add('importer','submit')
                 ->getForm();
 
@@ -137,15 +138,19 @@ class CommandeController extends Controller {
         
         if ($form->isValid()) {
             $file = $form->getData()['file'];
+            
+    
+             if($file->getMimeType() == 'text/plain' ||  $file->getMimeType() == 'text/csv' || $file->getMimeType() == 'application/csv' ){
+                $file->move(
+                   $this->container->getParameter('import_directory'),
+                   $file->getClientOriginalName()
+               );
 
-             $file->move(
-                $this->container->getParameter('import_directory'),
-                $file->getClientOriginalName()
-            );
-
-            $commandes = $this->csvReader($this->container->getParameter('import_directory').'/'.$file->getClientOriginalName());
-            return $this->redirectToRoute('commandes_liste');
-                
+               $commandes = $this->csvReader($this->container->getParameter('import_directory').'/'.$file->getClientOriginalName());
+               return $this->redirectToRoute('commandes_liste');
+             } else {
+                 throw new Exception("Le fichier importé doit être un CSV");
+             }
         }
 
         return $this->render('AppBundle:commandes:import_commandes.html.twig',['form' => $form->createView()]);
