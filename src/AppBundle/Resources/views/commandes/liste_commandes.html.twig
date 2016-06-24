@@ -3,12 +3,7 @@
 {% block body %}
     
 {% block javascripts %}
-    {{ parent() }}
-    
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-filestyle.min.js') }}"> </script>
-    <script>
-        /*$(":file").filestyle();*/
-    </script>
 {% endblock %}
     <div class="row">
         <div class="col-md-12">
@@ -31,11 +26,11 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-striped">
+            <table class="list-cmd table table-striped">
                 <tr><th>Commande</th><th>Status</th><th>Employé</th> <th>Client</th><th>Date</th>{{ is_granted('ROLE_MANAGER') ? '<th>Action</th>' :""}}</tr>
                 {% for commande in commandes %}
                         <tr>
-                        <td> {{ commande.numCommande }}</td>
+                        <td> {{ commande.numCommande }} </td>
                         <td> {{ commande.etat == 1 ? "En cours" : "En attente" }}</td>
                         <td> {{ commande.etat == 1 ? commande.employe.username : "" }}</td>
                         <td> {{ commande.nomClient }} </td>
@@ -45,6 +40,7 @@
                                 <button class="btn btn-primary" {{ commande.etat == 0 ? "style='display:none;'" : "" }} data-toggle="modal" data-target="#myModal{{ commande.id }}">
                                     Libérer la commande
                                 </button>
+                                    <a class="btn btn-info glyphicon glyphicon-eye-open" title="Voir le détail" href="{{ path('commande_show', {'id':commande.id}) }}">  </a>
                             </td>
                             <div class="modal fade" id="myModal{{ commande.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel{{ commande.id }}" aria-hidden="true">
                                 <div class="modal-dialog">

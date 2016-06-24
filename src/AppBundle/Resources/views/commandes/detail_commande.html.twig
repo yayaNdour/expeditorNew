@@ -15,7 +15,7 @@
                     <tr>
                         <td>{{ ligne.article.nom }} (<span class="weight{{ ligne.article.id }}">{{ ligne.article.poids|number_format }}</span>g)</td>
                         <td><span class="qte{{ ligne.article.id }}">{{ ligne.quantiteTotal }}</span></td>
-                        <td><input class="qte qte{{ ligne.article.id }}" type="number" data-article="{{ ligne.article.id }}" value="{{ ligne.quantiteEnCours }}" min="0" max="{{ ligne.quantiteTotal }}"></td>
+                        <td><input class="qte qte{{ ligne.article.id }}" type="number" data-article="{{ ligne.article.id }}" value="{{ ligne.quantiteEnCours }}" min="0" max="{{ ligne.quantiteTotal }}" readonly="{{ is_granted('ROLE_MANAGER') ? "" : "readonly" }}"></td>
                         <td><span class="weight-qte{{ ligne.article.id }}">{{ ligne.quantiteEnCours*ligne.article.poids|number_format }}</span>g</td>
                     </tr>   
                 {% endfor %}
