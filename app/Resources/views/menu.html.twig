@@ -36,7 +36,7 @@
                 
             </ul>
              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                 <p class="text-right">Bonjour {{app.user.username}},<br>
+                 <p class="text-right">Bonjour {{app.user.username}}<br>
                 <a class="btn btn-info btn-xs pull-right" href="{{ path('fos_user_security_logout') }}">Se déconnecter</a>
                 </p>
             {% endif %}
