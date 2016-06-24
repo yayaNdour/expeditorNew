@@ -33,6 +33,22 @@
             <a class="btn btn-info finish" href="{{ path('commande_finish', {'id': commande.id} ) }}" style="display:none;" >Fini</a>
         </div>
     </div>
+            
+    {% if commande.commentaire!="" %}
+    <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal">×</a>
+                    <h3>Commenaire</h3>
+                </div>
+                <div class="modal-body">
+                    <p>{{ commande.commentaire }}</p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    {% endif %}
 {% endblock  %}
 
 {% block javascripts %}
@@ -75,6 +91,7 @@
     });
     $( document ).ready(function() {
         updateTotal();
+        $('#myModal').modal('show');
     });
 </script>
 {% endblock  %}

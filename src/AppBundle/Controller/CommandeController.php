@@ -19,7 +19,7 @@ class CommandeController extends Controller {
         $repo = $em->getRepository('AppBundle:Commande');
         
         $commande = $repo->find($id);
-        if(!$commande){
+        if(!$commande || ($this->isGranted("ROLE_EMPLOYE") && ($commande->getEtat()!=1 || $this->getUser()->getId()!=$commande->getEmploye()->getId()))){
             return $this->redirectToRoute('commandes_liste');
         }
         $repo = $em->getRepository('AppBundle:LigneCommande');
@@ -37,7 +37,7 @@ class CommandeController extends Controller {
         if($commande){
            $commande->setEmploye(null);
            $commande->setEtat(0);
-           $commande->setCommentaire($request->request->get('message', ''));
+           $commande->setCommentaire($request->query->get('message'));
            $em->persist($commande);
            $em->flush();
         }
@@ -57,9 +57,11 @@ class CommandeController extends Controller {
         $repo = $em->getRepository('AppBundle:LigneCommande');
         $lignes = $repo->getLigneCommandeArticle($id, $articleId);
         foreach ( $lignes as $ligne){
-            $ligne->setQuantiteEnCours($qte);
-            $em->persist($ligne);
-            $em->flush();
+            if($qte <= $ligne->getQuantiteTotal()){
+                $ligne->setQuantiteEnCours($qte);
+                $em->persist($ligne);
+                $em->flush();
+            }
         }
         return new Response('');
     }
