@@ -7,8 +7,8 @@
 !app/logs/.gitkeep
 /app/phpunit.xml
 /build/
-/vendor/
-!vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form/
+/vendor/*
+!vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
 /bin/
 /nbproject/*
 /composer.phar
