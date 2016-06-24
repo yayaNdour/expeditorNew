@@ -141,7 +141,8 @@ class CommandeController extends Controller {
             );
 
             $commandes = $this->csvReader($this->container->getParameter('import_directory').'/'.$file->getClientOriginalName());
-            //$commandes = $this->xlsReader($filePath);
+            return $this->redirectToRoute('commandes_liste');
+                
         }
 
         return $this->render('AppBundle:commandes:import_commandes.html.twig',['form' => $form->createView()]);
@@ -155,7 +156,6 @@ class CommandeController extends Controller {
         $commandes=array();
         $em = $this->getDoctrine()->getManager();
         $row = 1;
-        exit(var_dump(fopen($filePath, "r")));
         if (($handle = fopen($filePath, "r")) !== FALSE) {
             
             while (($dataFile = fgetcsv($handle, 0, ",")) !== FALSE) {
@@ -188,7 +188,6 @@ class CommandeController extends Controller {
                         
                         $repo = $em->getRepository('AppBundle:LigneCommande');
                         foreach ($ligneCommandes as $key => $ligneCommande) {
-                            var_dump($ligneCommande);
                             $em->persist($ligneCommande);
                             $em->flush();
                         }
