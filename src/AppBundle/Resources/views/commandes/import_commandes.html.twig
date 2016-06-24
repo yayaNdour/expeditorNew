@@ -1,11 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-filestyle.min.js') }}"> </script>
+    <script>
+        /*$(":file").filestyle();*/
+    </script>
+{% endblock %}
+
     <div class="row">
         <div class="col-md-12">
-            {{ form_start(form) }}
-                {{ form_widget(form) }}
-            {{ form_end(form) }}
+            {#
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                {{ form_end(form) }}
+            #}
+            
+                {{ form(form) }}
+            
         </div>
     </div>
 {% endblock %}
