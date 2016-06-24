@@ -141,7 +141,8 @@ class CommandeController extends Controller {
             );
 
             $commandes = $this->csvReader($this->container->getParameter('import_directory').'/'.$file->getClientOriginalName());
-            //$commandes = $this->xlsReader($filePath);
+            return $this->redirectToRoute('commandes_liste');
+                
         }
 
         return $this->render('AppBundle:commandes:import_commandes.html.twig',['form' => $form->createView()]);
