@@ -155,7 +155,6 @@ class CommandeController extends Controller {
         $commandes=array();
         $em = $this->getDoctrine()->getManager();
         $row = 1;
-        exit(var_dump(fopen($filePath, "r")));
         if (($handle = fopen($filePath, "r")) !== FALSE) {
             
             while (($dataFile = fgetcsv($handle, 0, ",")) !== FALSE) {
@@ -188,7 +187,6 @@ class CommandeController extends Controller {
                         
                         $repo = $em->getRepository('AppBundle:LigneCommande');
                         foreach ($ligneCommandes as $key => $ligneCommande) {
-                            var_dump($ligneCommande);
                             $em->persist($ligneCommande);
                             $em->flush();
                         }
